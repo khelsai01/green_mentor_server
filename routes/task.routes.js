@@ -5,18 +5,9 @@ const auth = require("../middleware/auth.middleware");
 const taskRouter = express.Router();
  taskRouter.use(auth);
 taskRouter.get("/", async (req, res) => {
-    const quary = {};
-    const {title} = req.query;
-    const { userId } = req.body;
-
-    if (userId) {
-        quary.userId = userId;
-    }
-    if(title && userId){
-        quary.title = title;
-    }
+   
     try {
-        const tasks = await TaskModel.find( quary );
+        const tasks = await TaskModel.find( {userId:req.body.userId} );
         return res.status(200).send(tasks)
     } catch (error) {
         return res.status(400).send({ message: error.message })
@@ -37,7 +28,7 @@ taskRouter.post("/add", async (req, res) => {
 
 taskRouter.patch("/update/:id", async (req, res) => {
     const { id } = req.params;
-    const { userId } = req.body;
+    const { userId } = req.body.userId;
 
     try {
 
@@ -51,7 +42,7 @@ taskRouter.patch("/update/:id", async (req, res) => {
 
 taskRouter.delete("/delete/:id", async (req, res) => {
     const { id } = req.params;
-    const { userId } = req.body;
+    const { userId } = req.body.userId;
     try {
 
         await TaskModel.findByIdAndDelete({ userId, _id: id })
