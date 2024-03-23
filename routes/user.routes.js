@@ -50,6 +50,7 @@ userRouter.post("/login", async (req, res) => {
                 }
                 else{
                     return res.status(400).send({message:"wrong password"});
+                }
             })
         }
     } catch (error) {
