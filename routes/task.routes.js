@@ -3,7 +3,7 @@ const { TaskModel } = require("../models/task.model");
 const auth = require("../middleware/auth.middleware");
 
 const taskRouter = express.Router();
-//  taskRouter.use(auth);
+ taskRouter.use(auth);
 taskRouter.get("/", async (req, res) => {
     const quary = {};
     const {title} = req.query;
