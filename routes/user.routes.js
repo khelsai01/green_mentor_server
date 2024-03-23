@@ -44,14 +44,12 @@ userRouter.post("/login", async (req, res) => {
 
         if (user) {
             bcrypt.compare(password, user.password, (err, result) => {
-                if (err) {
-                    console.log(`password not match`)
-
-                }
-                else {
+                if (result) {
                     const token = jwt.sign({ username: user.username, userId: user._id }, "green_mentor", {expiresIn:"1day"})
                     return res.status(200).send({message:"Login successful", "token":token});
                 }
+                else{
+                    return res.status(400).send({message:"wrong password"});
             })
         }
     } catch (error) {
