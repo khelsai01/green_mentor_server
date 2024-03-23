@@ -4,9 +4,11 @@ const { userRouter } = require("./routes/user.routes");
 const { taskRouter } = require("./routes/task.routes");
 const { limiter } = require("./middleware/ratelimiter.middleware");
 const {errorMiddleware} = require("./middleware/error.middleware");
+const cors = require("cors")
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use("/users",userRouter);
 app.use("/tasks",taskRouter)
