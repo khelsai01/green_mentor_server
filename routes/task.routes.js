@@ -32,8 +32,8 @@ taskRouter.patch("/update/:id", async (req, res) => {
 
     try {
 
-        await TaskModel.findByIdAndUpdate({ userId, _id: id }, req.body)
-        return res.status(200).send({ message: `task of Id ${id} has been updated` })
+        const editTask =  await TaskModel.findByIdAndUpdate({ userId, _id: id }, req.body,{new:true})
+        return res.status(200).send({ message: `task of Id ${id} has been updated`,editTask })
     } catch (error) {
         return res.status(400).send({ message: error.message })
 
